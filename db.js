@@ -39,10 +39,18 @@ const withdraw = ({id, amount}, onWithdraw = undefined) => {
         const newBalance =  balance - parseFloat( amount)
 
         client.query(`update account set balance = $1 where id = $2`, [newBalance, id], (err, res) => {
-            if (err) console.log('\n Problem in withdrawing')
+            if (err) console.log(' Problem in withdrawing')
             else  {
                 console.log(` Amount ${amount} withdrawn successfully`)
                 if (onWithdraw) onWithdraw(`Amount ${amount} withdrawn successfully`)
+            }
+        })
+
+        client.query(`insert into transactions2 (amount, account_id) values ( $1, $2)`, [amount, id], (err, res) => {
+            if (err) console.log(' Problem in transaction')
+            else  {
+                console.log(` Amount ${amount} transaction inserted successfully`)
+                //if (onWithdraw) onWithdraw(`Amount ${amount} of transactions inserted into db successfully`)
             }
         })
     }
@@ -73,7 +81,6 @@ const deposit = ({id, amount}, onDeposit = undefined) => {
 }
 
 const transfer = ({srcId, destId, amount}, onTransfer = undefined) => {
-    
             withdraw({ id : srcId, amount}, msgWd => {
                 deposit({ id : destId, amount }, msgDp =>  {
                     if(onTransfer) onTransfer(`Amount ${amount} Transfered successfully `)

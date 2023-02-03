@@ -1,13 +1,13 @@
 const express = require('express');
 const { createNewAccount, deposit, withdraw, balance, transfer} = require('./db');
-const moneyRouter = require('./routes/moneyRoutes');
+const accountRouter = require('./routes/accountRoutes');
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
 app.use(express.json());
-app.use('/api/money', moneyRouter);
+app.use('/api/account', accountRouter);
 
 app.post('/create', (req, res) => {
     createNewAccount(req.body, (msg) => {

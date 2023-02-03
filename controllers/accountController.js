@@ -1,5 +1,5 @@
 const express = require('express');
-const {deposit, createNewAccount, withdraw, balance, transfer} = require('.././db')
+const {deposit, createNewAccount, withdraw, balance, transfer} = require('../db')
 
 exports.create = async (req, res) => {
     const data = req.body;
