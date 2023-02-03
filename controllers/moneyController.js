@@ -1,8 +1,7 @@
 const express = require('express');
-const {deposit, createNewAccount} = require('.././db')
+const {deposit, createNewAccount, withdraw, balance, transfer} = require('.././db')
 
-
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     const data = req.body;
     console.log(data);
 
@@ -11,20 +10,35 @@ exports.create = (req, res) => {
     })
 }
 
-
-exports.getBalance = (req, res) => {
-
+exports.getBalance = async (req, res) => {
+    const id = req.params.id;
+    balance(id, bal => {
+        res.json({'sts' : 'success', bal});
+    })
 }
 
-exports.deposit = (req, res) => {
 
-   deposit()
+exports.deposit = async (req, res) => {
+   const id = req.params.id;
+   console.log(id);
+   const {name, amount} = req.body;
+
+   deposit({id, amount}, (msg) => {
+    res.json({'sts' : 'success', msg});
+   })
 }
 
-exports.withdraw = (req, res) => {
-
+exports.withdraw = async (req, res) => {
+    const id = req.params.id;
+    const {name, amount} = req.body;
+    withdraw({id, amount}, (msg) => {
+        res.json({'sts' : 'success', msg});
+    })
 }
 
-exports.transfer = (req, res) => {
+exports.transfer = async (req, res) => {
 
+    transfer(req.body, (msg) => {
+        res.json({'sts': 'success', msg});
+    })
 }
