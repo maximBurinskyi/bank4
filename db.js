@@ -1,7 +1,7 @@
 const Pool = require('pg').Pool
 const {Client} = require('pg');
 
-const client = new Client({
+const client = new Pool({
     host: 'localhost',
     user: 'proooo',
     password: '1234',
@@ -9,14 +9,22 @@ const client = new Client({
     port: 5433
 })
 
+// client.connect( err => {
+//     if (err) {
+//         console.log('Error In Connectivity')
+//         return
+//     }
+//     console.log('\n Connected Successfully')
+// })
 
-client.connect( err => {
-    if (err) {
-        console.log('Error In Connectivity')
-        return
-    }
-    console.log('\n Connected Successfully')
-})
+const createNewBank = ({id, name}) => {
+    client.query(`insert into bank values ( $1, $2)`, [id, name], (err, res) => {
+        if (err) console.log('Problem in creating a bank')
+        else {
+            console.log(`New Bank Created Successfully`)
+        }
+    })
+}
 
 const createNewAccount = ({ id, name, balance }, onCreate = undefined) => {
     client.query(`insert into account values ( $1, $2, $3 )`, [id, name, balance] , (err, res) => {
@@ -112,10 +120,12 @@ const balance = (id, onBalance = undefined) => {
 //deposit({acId: 2, amount: 1})
 
 
-module.exports = {
-    createNewAccount,
-    withdraw,
-    deposit,
-    transfer,
-    balance
-}
+module.exports = 
+//{
+    client
+//     createNewAccount,
+//     withdraw,
+//     deposit,
+//     transfer,
+//     balance
+// }

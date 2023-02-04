@@ -20,3 +20,8 @@ create TABLE transactions2 (
     account_id INTEGER,
     FOREIGN KEY (account_id) REFERENCES account (id)
 );
+
+create TABLE bank (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255)
+);
