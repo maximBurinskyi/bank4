@@ -9,11 +9,10 @@ router
 
 router
     .route('/:id')
-    //.get(getOneTransaction)
+    .get(getOneTransaction)
     .delete(deleteTransaction);
 
 router
-    .route('/one/:account_id')
-    .get(getOneTransaction);
+    .route('/one/:account_id');
 
 module.exports = router;

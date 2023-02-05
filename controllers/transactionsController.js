@@ -7,10 +7,13 @@ exports.getTransactions =  async (req, res) => {
 }
 
 exports.getOneTransaction = async (req, res) => {
-    const account_id = req.params.account_id;
-    
+    const id = req.params.id;
+    //const id = req.params.id;
+    const account_id = id;
+    console.log(id);
+
     const transaction = await db.query(`SELECT * FROM transactions2 where account_id = $1`, [account_id])
-    res.json(transaction.rows[0]);
+    res.json(transaction.rows);
 }
 
 exports.addTransaction = async (req, res) => {
@@ -20,6 +23,9 @@ exports.addTransaction = async (req, res) => {
     res.json(newTransaction.rows[0]);
 }
 
-exports.deleteTransaction = (req, res) => {
-    res.send('delete transaction');
+exports.deleteTransaction = async (req, res) => {
+    const id = req.params.id;
+    await db.query('DELETE FROM transactions2 where account_id =$1', [id])
+    res.json({msg: "Transaction deleted successfully"})
+    //res.send('delete transaction');
 }
