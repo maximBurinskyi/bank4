@@ -37,6 +37,7 @@ const createNewAccount = ({ id, name, balance }, onCreate = undefined) => {
     })
 }
 
+
 const withdraw = ({id, amount}, onWithdraw = undefined) => {
     client.query(`select balance from account where id = $1`, [id] , (err, res) => {
         if (err) {
@@ -60,6 +61,30 @@ const withdraw = ({id, amount}, onWithdraw = undefined) => {
                 console.log(` Amount ${amount} transaction inserted successfully`)
                 //if (onWithdraw) onWithdraw(`Amount ${amount} of transactions inserted into db successfully`)
             }
+        })
+    }
+    })
+}
+
+const deposit2 = ({id, amount}, onDeposit = undefined) => {
+    
+    client.query(`select balance from account where id = $1`, [id] , (err, res) => {
+        if (err) {
+            console.log(' Problem in Deposit')
+        } else {
+        const  balance  = parseFloat( res.rows[0].balance )
+
+        const newBalance =  balance + parseFloat(amount)
+
+        client.query(`update account set balance = $1 where id = $2`, [newBalance, id], (err, res) => {
+            if (err) console.log('/n Problem in Depositing')
+            else {
+                console.log(` Amount ${amount} Deposited successfully`)
+
+                if (onDeposit) onDeposit(`Amount ${amount} Deposited successfully`)
+
+            }
+             
         })
     }
     })

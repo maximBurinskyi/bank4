@@ -1,9 +1,11 @@
 const express = require('express');
-const { createNewAccount, deposit, withdraw, balance, transfer} = require('./db');
+const { createNewAccount, balance, transfer} = require('./db');
 const accountRouter = require('./routes/accountRoutes');
 const transactionRouter = require('./routes/transactionsRoutes');
 const bankRouter = require('./routes/bankRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
+const deposit = require('./db2');
+const withdraw = require('./db3');
 
 
 const PORT = process.env.PORT || 3000;
@@ -20,6 +22,18 @@ app.use('/api/category', categoryRouter);
 app.post('/create', (req, res) => {
     createNewAccount(req.body, (msg) => {
         res.json({'sts': 'success', msg})
+    })
+})
+
+app.post('/deposit', (req, res) => {
+    deposit(req.body, (msg) => {
+        res.json({'sts': 'success', msg})
+    })
+})
+
+app.post('/withdraw', (req, res) => {
+    withdraw(req.body, (msg) => {
+        res.json({'sts' : 'success', msg})
     })
 })
 
