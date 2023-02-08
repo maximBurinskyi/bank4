@@ -51,7 +51,7 @@ exports.deleteTransaction = async (req, res) => {
     //res.send('delete transaction');
 }
 
-exports.getTransactionStats = async (req, res) => {
+exports.getTransactionStatsByDates = async (req, res) => {
     id = req.params.id;
     const {fromPeriod, toPeriod} = req.body;
     const stats = await db.query(`SELECT category.id, category.name, transactions3.amount, transactions3.date FROM category  JOIN transactions3
@@ -59,18 +59,18 @@ exports.getTransactionStats = async (req, res) => {
     res.json(stats.rows);
 }
 
-// exports.getTransactionStats2 = async (req, res) => {
-//     id = req.params.id;
-//     const {fromPeriod, toPeriod} = req.body;
-//     const stats = await db.query(`SELECT c.name, s.sum_transactions
-//     FROM category AS c
-//     JOIN (SELECT SUM(amount) AS sum_transactions, category_id FROM transactions3 GROUP BY category_id) AS s
-//     ON c.id = s.category_id        WHERE s.category_id = $1
+exports.getTransactionStatsCategorySum = async (req, res) => {
+    id = req.params.id;
+    const {fromPeriod, toPeriod} = req.body;
+    const stats = await db.query(`SELECT c.name, s.sum_transactions
+    FROM category AS c
+    JOIN (SELECT SUM(amount) AS sum_transactions, category_id FROM transactions3 GROUP BY category_id) AS s
+    ON c.id = s.category_id        WHERE s.category_id = $1
     
     
-//     `, [id])
-//     res.json(stats.rows);
-// }
+    `, [id])
+    res.json(stats.rows);
+}
 
 
 

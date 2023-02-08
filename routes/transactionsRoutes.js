@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getTransactions, addTransaction, deleteTransaction, getOneTransaction, getTransactionStats} = require('../controllers/transactionsController');
+const { getTransactions, addTransaction, deleteTransaction, getOneTransaction, getTransactionStats, getTransactionStatsByDates, getTransactionStatsCategorySum} = require('../controllers/transactionsController');
 
 router
     .route('/')
@@ -15,8 +15,13 @@ router
 router
     .route('/one/:account_id');
 
+    
 router
-    .route('/stats/:id')
-    .post(getTransactionStats);
+    .route('/stats1/:id')
+    .post(getTransactionStatsByDates);
+
+router
+    .route('/stats2/:id')
+    .post(getTransactionStatsCategorySum);
 
 module.exports = router;
