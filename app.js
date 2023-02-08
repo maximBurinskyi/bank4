@@ -6,9 +6,11 @@ const bankRouter = require('./routes/bankRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
 const deposit = require('./db2');
 const withdraw = require('./db3');
+const swaggerUI = require('swagger-ui-express');
+const swaggerJson = require('./swagger.json');
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = +process.env.PORT || 3000;
 
 const app = express();
 
@@ -18,6 +20,7 @@ app.use('/api/account', accountRouter);
 app.use('/api/transaction', transactionRouter);
 app.use('/api/bank', bankRouter);
 app.use('/api/category', categoryRouter);
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJson))
 
 app.post('/create', (req, res) => {
     createNewAccount(req.body, (msg) => {

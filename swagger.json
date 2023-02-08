@@ -1,0 +1,101 @@
+{
+   "swagger": "2.0",
+   "info": {
+    "version": "1.0",
+      "title": "Financial service"
+   },
+   "paths": {
+    "/api/account/{id}": {
+        "get": {
+            "description": "Get user by ID",
+            "tags": ["Account"],
+            "operationId": "getAccountById",
+            "parameters": [
+                {
+                    "name": "accountID",
+                    "in": "path",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "Authorizations",
+                    "in": "header",
+                    "type": "string",
+                    "required": true
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Success response",
+                    "shema": {
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Viktor"
+                            },
+                            "age": {
+                                "type": "integer",
+                                "example": "10"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "max@gmail.com"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request",
+                    "shema": {
+                        "properties": {
+                            "statusCode": {
+                                "type": "number",
+                                "example": "4001"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Bad Request"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "put": {
+            "description": "Update Account",
+            "tags": ["Account"],
+            "operationId": "updateAccountById",
+            "parameters": [
+                {
+                    "name": "email",
+                    "required": false,
+                    "type": "string",   
+                    "in": "formData"
+
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "User was updated successfully",
+                    "shema": {
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Viktor"
+                            },
+                            "age": {
+                                "type": "integer",
+                                "example": "10"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "max@gmail.com"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+   } 
+}
